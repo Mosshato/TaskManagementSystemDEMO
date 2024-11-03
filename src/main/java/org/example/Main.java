@@ -10,7 +10,7 @@ public class Main {
         Database.initialize();
 
         // Initialize employees
-        Employee employee1 = new Employee(1, "John Jones`");
+        Employee employee1 = new Employee(1, "John Doeeee");
         Employee employee2 = new Employee(2, "Jane Smissssth");
 
         // Initialize manager

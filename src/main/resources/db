@@ -1,0 +1,62 @@
+[Tasks]
+# TaskID | Description               | Status       | AssignedEmployeeID
+1001 | Prepare Q4 report         | Pending      | 1
+1002 | Update client database     | In Progress  | 2
+1003 | Develop website backend    | Pending      | 3
+
+[Employees]
+# ID | Name          | Department
+1 | John Doe     | Sales
+2 | Jane Smith   | Marketing
+3 | Alice Brown  | IT
+
+[Managers]
+# ID | Name          | Department
+101 | Mark Johnson  | Sales
+102 | Lucy White    | Marketing
+1001 | Prepare Q4 report | Pending | 1
+1002 | Update client database | In Progress | 2
+1001 | Prepare Q4 report | Pending | 1
+1002 | Update client database | In Progress | 2
+1001 | Prepare Q4 report | Pending | 1
+1001 | Prepare Q4 report | Pending | 1
+1002 | Update client database | Pending | 2
+1002 | Update client database | Pending | 2
+1003 | Finish sales presentation | Pending | 2
+1003 | Finish sales presentation | Pending | 2
+1004 | Develop website backend | Pending | 3
+1004 | Develop website backend | Pending | 3
+1001 | Prepare Q4 report | Pending | 1
+1001 | Prepare Q4 report | Pending | 1
+1002 | Update client database | Pending | 2
+1002 | Update client database | Pending | 2
+1003 | Finish sales presentation | Pending | 2
+1003 | Finish sales presentation | Pending | 2
+1004 | Develop website backend | Pending | 3
+1004 | Develop website backend | Pending | 3
+1001 | Prepare Q46666666666 report | Pending | 1
+1001 | Prepare Q46666666666 report | Pending | 1
+1002 | Update clientsssssssss database | Pending | 2
+1002 | Update clientsssssssss database | Pending | 2
+1003 | Finish salesxzxzxz presentation | Pending | 2
+1003 | Finish salesxzxzxz presentation | Pending | 2
+1004 | Develop websitxzxzxzxze backend | Pending | 3
+1004 | Develop websitxzxzxzxze backend | Pending | 3
+1001 | Prepare Q4 report | Pending | 1
+1001 | Prepare Q4 report | Pending | 1
+1002 | Update client database | Pending | 2
+1002 | Update client database | Pending | 2
+1003 | Prepare Q4 report | Pending | 1
+1003 | Prepare Q4 report | Pending | 1
+1001 | Prepare Q4 report | Pending | 1
+1001 | Prepare Q4 report | Pending | 1
+1002 | Update client database | Pending | 2
+1002 | Update client database | Pending | 2
+1003 | Prepare Q4 report | Pending | 1
+1003 | Prepare Q4 report | Pending | 1
+1001 | Prepare Q4 report | Pending | 1
+1001 | Prepare Q4 report | Pending | 1
+1002 | Update client database | Pending | 2
+1002 | Update client database | Pending | 2
+1003 | Prepare Q4 report | Pending | 1
+1003 | Prepare Q4 report | Pending | 1

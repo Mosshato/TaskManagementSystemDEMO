@@ -1,10 +1,10 @@
-`package org.example;
+package org.example;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         System.out.println("Hello world!");
 
         Database.initialize();
@@ -59,5 +59,9 @@ public class Main {
             }
         }
     }
+     */
+    public static void main(String[] args) {
+        Application app = new Application();
+        app.run();
+    }
 }
-`

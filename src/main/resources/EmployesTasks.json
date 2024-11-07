@@ -1,0 +1,70 @@
+[
+    {
+        "taskCount": 3,
+        "name": "John Carter",
+        "tasks": [
+            {
+                "timeAssigned": "1 hour",
+                "description": "Post weekly updates on the company\u2019s social media platforms.",
+                "taskName": "Social Media Update"
+            },
+            {
+                "timeAssigned": "1.5 hours",
+                "description": "Review new design drafts and provide feedback to the design team.",
+                "taskName": "Design Review"
+            },
+            {
+                "timeAssigned": "1 hour",
+                "description": "Edit and publish the latest blog post.",
+                "taskName": "Blog Post Editing"
+            }
+        ]
+    },
+    {
+        "taskCount": 4,
+        "name": "Emily Chen",
+        "tasks": [
+            {
+                "timeAssigned": "1 hour",
+                "description": "Post weekly updates on the company\u2019s social media platforms.",
+                "taskName": "Social Media Update"
+            },
+            {
+                "timeAssigned": "1.5 hours",
+                "description": "Review new design drafts and provide feedback to the design team.",
+                "taskName": "Design Review"
+            },
+            {
+                "timeAssigned": "2 hours",
+                "description": "Draft content for the upcoming monthly newsletter.",
+                "taskName": "Content Writing"
+            },
+            {
+                "timeAssigned": "1 hour",
+                "description": "Edit and publish the latest blog post.",
+                "taskName": "Blog Post Editing"
+            }
+        ]
+    },
+    {
+        "taskCount": 3,
+        "name": "Michael Lopez",
+        "tasks": [
+            {
+                "timeAssigned": "2 hours",
+                "description": "Respond to customer service calls and address their needs.",
+                "taskName": "Customer Service Calls"
+            },
+            {
+                "timeAssigned": "1.5 hours",
+                "description": "Test new product features and report any issues.",
+                "taskName": "Product Testing"
+            },
+            {
+                "timeAssigned": "1 hour",
+                "description": "Attend a training session on the new software update.",
+                "taskName": "Training Session"
+            }
+        ]
+    }
+]

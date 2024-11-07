@@ -1,61 +1,171 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import java.util.Scanner;
 
-public class Employee {
-    private int employeeId;
-    private String name;
-    private List<Task> tasks;
+public class Employee extends User implements Login, Task {
+    public Boolean isLoggedIn = false;
+    String name;
 
-    public Employee(int employeeId, String name) {
-        this.employeeId = employeeId;
-        this.name = name;
-        this.tasks = new ArrayList<>();
+    Employee(String name) {
+        super(name);
+        this.name = name; // Assign name to this instance
     }
 
-    public void addTask(Task task) {
-        tasks.add(task);
+    String getName() {
+        return this.name;
     }
 
-    public void removeTask(int taskId) {
-        tasks.removeIf(task -> task.getTaskId() == taskId);
+    @Override
+    public void login() {
+        System.out.println("You are logged in as an employee");
+        this.isLoggedIn = true;
     }
 
-    public int getEmployeeId() {
-        return employeeId;
+    @Override
+    public void logout() {
+        System.out.println("You logged out from an Employee user");
     }
 
-    // Adding getId() method
-    public int getId() {
-        return employeeId; // Return the employee's ID
+    public void setTaskCompleted() {
+        StringBuilder jsonBuilder = new StringBuilder();
+        String filePath = "C:\\Facultate\\ANUL2_SEM1\\ProgramareIII\\demoTaskApp\\demoTaskApp\\src\\main\\resources\\EmployesTasks.json";
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                jsonBuilder.append(line);
+            }
+
+            JSONArray jsonArray = new JSONArray(jsonBuilder.toString());
+            boolean found = false;
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject person = jsonArray.getJSONObject(i);
+                if (person.getString("name").equalsIgnoreCase(this.getName())) {
+                    found = true;
+
+                    JSONArray tasks = person.getJSONArray("tasks");
+
+                    if (tasks.isEmpty()) {
+                        System.out.println("No tasks to delete for " + this.getName());
+                        return;
+                    }
+
+                    System.out.println("Tasks for " + this.getName() + ":");
+                    this.viewTasks();
+
+                    Scanner scanner = new Scanner(System.in);
+                    System.out.print("Enter the task number you want to delete: ");
+                    int taskNumber = scanner.nextInt();
+
+                    if (taskNumber > 0 && taskNumber <= tasks.length()) {
+                        tasks.remove(taskNumber - 1);
+                        System.out.println("Task " + taskNumber + " has been deleted.");
+
+
+                        int currentTaskCount = person.getInt("taskCount");
+                        person.put("taskCount", currentTaskCount - 1);
+                    } else {
+                        System.out.println("Invalid task number.");
+                        return;
+                    }
+
+                    break;
+                }
+            }
+
+            if (found) {
+                try (FileWriter fileWriter = new FileWriter(filePath)) {
+                    fileWriter.write(jsonArray.toString(4));
+                    System.out.println("Changes saved to file.");
+                }
+            } else {
+                System.out.println("User " + this.getName() + " not found.");
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error reading or writing the file: " + e.getMessage());
+        }
     }
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
+
+    @Override
+    public void viewTasks() {
+        System.out.println("Your tasks for today are:\n");
+        String filePath = "C:\\Facultate\\ANUL2_SEM1\\ProgramareIII\\demoTaskApp\\demoTaskApp\\src\\main\\resources\\EmployesTasks.json";
+
+        try {
+            StringBuilder jsonBuilder = new StringBuilder();
+            try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    jsonBuilder.append(line);
+                }
+            }
+
+            JSONArray jsonArray = new JSONArray(jsonBuilder.toString());
+
+            boolean found = false;
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject person = jsonArray.getJSONObject(i);
+                if (person.getString("name").equalsIgnoreCase(this.getName())) {
+                    found = true;
+                    JSONArray tasks = person.getJSONArray("tasks");
+                    for (int j = 0; j < tasks.length(); j++) {
+                        JSONObject task = tasks.getJSONObject(j);
+                        System.out.println("Task Name: " + task.getString("taskName"));
+                        System.out.println("Description: " + task.getString("description"));
+                        System.out.println("Time Assigned: " + task.getString("timeAssigned"));
+                        System.out.println();
+                    }
+                    break;
+                }
+            }
+
+            if (!found) {
+                System.out.println("No tasks found for the name: " + this.getName());
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error reading the file: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        }
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public void whileIsLoggedIn() {
+        System.out.println("Choose one of the following options:\n");
+        while (true) {
+            System.out.println("1 - See your tasks.\n");
+            System.out.println("2 - Set a task as completed.\n");
+            System.out.println("3 - Exit the app.\n");
+
+            InputDevice inputDevice = new InputDevice();
+            Integer option = inputDevice.chooseOption();
+
+            if (option == 1) {
+                this.viewTasks();
+                System.out.println("You can continue by choosing an option again:\n");
+            } else if (option == 2) {
+                this.setTaskCompleted();
+                System.out.println("You can continue by choosing an option again:\n");
+            } else if (option == 3) {
+                System.exit(0);
+            } else {
+                System.out.println("Enter a valid option.");
+            }
+        }
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    // Return a read-only view of the tasks
-    public List<Task> getTasks() {
-        return Collections.unmodifiableList(tasks);
-    }
-
-    // Method to get the count of tasks assigned to this employee
-    public int getTaskCount() {
-        return tasks.size();
-    }
-
-    // Optional: Method to clear all tasks (if needed)
-    public void clearTasks() {
-        tasks.clear();
+    @Override
+    public Boolean isloggedin() {
+        return this.isLoggedIn;
     }
 }

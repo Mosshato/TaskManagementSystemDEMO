@@ -1,0 +1,55 @@
+[
+    {
+        "taskCount": 2,
+        "name": "Alice Johnson",
+        "tasks": [
+            {
+                "timeAssigned": "3 hours",
+                "description": "Conduct research on competitors' pricing and product offerings.",
+                "taskName": "Market Research"
+            },
+            {
+                "timeAssigned": "1 hour",
+                "description": "Prepare agenda and materials for the weekly team meeting.",
+                "taskName": "Meeting Preparation"
+            }
+        ]
+    },
+    {
+        "taskCount": 2,
+        "name": "Daniel Kim",
+        "tasks": [
+            {
+                "timeAssigned": "2 hours",
+                "description": "Review the website for any outdated information or broken links.",
+                "taskName": "Website Audit"
+            },
+            {
+                "timeAssigned": "1.5 hours",
+                "description": "Draft the content plan for next month's blog posts.",
+                "taskName": "Content Planning"
+            }
+        ]
+    },
+    {
+        "taskCount": 3,
+        "name": "Sophia Martinez",
+        "tasks": [
+            {
+                "timeAssigned": "2 hours",
+                "description": "Analyze monthly financial reports and identify key trends.",
+                "taskName": "Financial Analysis"
+            },
+            {
+                "timeAssigned": "1 hour",
+                "description": "Process and approve invoices received from vendors.",
+                "taskName": "Invoice Processing"
+            },
+            {
+                "timeAssigned": "1 hour",
+                "description": "Review department budget and highlight significant variances.",
+                "taskName": "Budget Review"
+            }
+        ]
+    }
+]

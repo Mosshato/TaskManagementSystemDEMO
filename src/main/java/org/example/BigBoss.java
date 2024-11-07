@@ -2,58 +2,57 @@ package org.example;
 
 import java.util.List;
 
-public class BigBoss implements TaskManagement, SupervisoryRole{
-    private String name;
-    private List<Manager> managers;
+public class BigBoss extends User implements Login, Task{
+    Boolean isLoggedin = false;
 
-    public BigBoss(String name, List<Manager> managers) {
-        this.name = name;
-        this.managers = managers;
-    }
-
-
-    @Override
-    public void createTask(Employee employee, String description) {
-        int taskId = IDGenerator.getNewTaskId();
-        Task newTask = new Task(taskId, description, "Pending", employee.getEmployeeId());
-
-        // Format the task data for saving
-        String taskData = taskId + " | " + description + " | Pending | " + employee.getEmployeeId();
-
-        // Check if the task already exists in the database before appending
-        if (!Database.taskExists(taskData)) {
-            employee.addTask(newTask);
-            Database.appendData(taskData); // Save the task to the db file
-            System.out.println("Task created for " + employee.getName());
-        } else {
-            System.out.println("Task already exists: " + taskData);
-        }
-    }
-
-
-    @Override
-    public void deleteTask(Employee employee, int taskId) {
-        employee.removeTask(taskId);
-        System.out.println("Task removed from " + employee.getName());
+    BigBoss(String name) {
+        super(name);
     }
 
     @Override
-    public void assignTaskToMultipleEmployees(List<Employee> employees, String description) {
-        for (Employee employee : employees) {
-            createTask(employee, description);
-        }
+    public void login() {
+        System.out.println("You are logged in as a Boss");
+        this.isLoggedin = true;
     }
 
     @Override
-    public void viewAllTasks() {
-        managers.forEach(manager -> manager.viewAllTasks());
+    public void logout() {
+        System.out.println("You logged out from a Boss user");
     }
 
-    public void createTaskForManager(Manager manager, String description) {
-        System.out.println("BigBoss created a task for manager " + manager.getName());
+    @Override
+    public void whileIsLoggedIn() {
+
     }
 
-    public void deleteTaskForManager(Manager manager, int taskId) {
-        System.out.println("BigBoss removed a task from manager " + manager.getName());
+    @Override
+    public Boolean isloggedin() {
+        return this.isLoggedin;
+    }
+
+    @Override
+    public void viewTasks() {
+        System.out.println("Below are the today tasks assigned to the Managers and Employee: \n");
+    }
+
+    @Override
+    public void setTaskCompleted() {
+
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,6 +1,7 @@
 package org.example;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,8 +14,7 @@ public class Employee extends User implements Login, Task {
     String name;
 
     Employee(String name) {
-        super(name);
-        this.name = name; // Assign name to this instance
+        this.name = name;
     }
 
     String getName() {
@@ -56,7 +56,6 @@ public class Employee extends User implements Login, Task {
                         return;
                     }
 
-                    System.out.println("Tasks for " + this.getName() + ":");
                     this.viewTasks();
 
                     Scanner scanner = new Scanner(System.in);
@@ -67,14 +66,12 @@ public class Employee extends User implements Login, Task {
                         tasks.remove(taskNumber - 1);
                         System.out.println("Task " + taskNumber + " has been deleted.");
 
-
                         int currentTaskCount = person.getInt("taskCount");
                         person.put("taskCount", currentTaskCount - 1);
                     } else {
                         System.out.println("Invalid task number.");
                         return;
                     }
-
                     break;
                 }
             }
@@ -88,15 +85,16 @@ public class Employee extends User implements Login, Task {
                 System.out.println("User " + this.getName() + " not found.");
             }
 
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: File not found at " + filePath);
         } catch (IOException e) {
             System.out.println("Error reading or writing the file: " + e.getMessage());
         }
     }
 
-
     @Override
     public void viewTasks() {
-        System.out.println("Your tasks for today are:\n");
+        System.out.println(this.getName()+"'s tasks for today are:\n");
         String filePath = "C:\\Facultate\\ANUL2_SEM1\\ProgramareIII\\demoTaskApp\\demoTaskApp\\src\\main\\resources\\EmployesTasks.json";
 
         try {
@@ -109,7 +107,6 @@ public class Employee extends User implements Login, Task {
             }
 
             JSONArray jsonArray = new JSONArray(jsonBuilder.toString());
-
             boolean found = false;
 
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -132,6 +129,8 @@ public class Employee extends User implements Login, Task {
                 System.out.println("No tasks found for the name: " + this.getName());
             }
 
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: File not found at " + filePath);
         } catch (IOException e) {
             System.out.println("Error reading the file: " + e.getMessage());
         } catch (Exception e) {

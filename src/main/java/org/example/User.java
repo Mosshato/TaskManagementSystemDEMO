@@ -12,6 +12,9 @@ public abstract class User {
     User(String name) {
         this.name = name;
     }
+    User() {
+        this.name  = null;
+    }
     public void getInfo(){
 
     }

@@ -5,12 +5,12 @@ public class Application {
     OutputDevice outputDevice = new OutputDevice();
     InputDevice inputDevice = new InputDevice();
 
-    public void run() {
+    public void run(String[] args) {
 
-        outputDevice.beforeLogin();
-        Integer option;
+        //outputDevice.beforeLogin();
+        Integer option = Integer.valueOf(args[0]);
         while (true) {
-            option = inputDevice.chooseOption();
+            //option = inputDevice.chooseOption();
 
             if (option == 1) {
                 Employee employee = new Employee("John Carter");
@@ -27,12 +27,14 @@ public class Application {
             } else if (option == 3) {
                 BigBoss boss = new BigBoss("Babtan Alexandru");
                 boss.login();
+                System.out.println(boss.name);
                 boss.whileIsLoggedIn();
                 boss.logout();
             } else if (option == 4 ) {
                 System.exit(0);
             } else {
-                System.out.println("Write a valid option!\n");
+                System.out.println(option + " is not a valid option!\n");
+                System.exit(0);
             }
         }
     }

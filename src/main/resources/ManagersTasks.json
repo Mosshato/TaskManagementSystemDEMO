@@ -1,22 +1,11 @@
 [
     {
-        "taskCount": 2,
+        "taskCount": 0,
         "name": "Alice Johnson",
-        "tasks": [
-            {
-                "timeAssigned": "3 hours",
-                "description": "Conduct research on competitors' pricing and product offerings.",
-                "taskName": "Market Research"
-            },
-            {
-                "timeAssigned": "1 hour",
-                "description": "Prepare agenda and materials for the weekly team meeting.",
-                "taskName": "Meeting Preparation"
-            }
-        ]
+        "tasks": []
     },
     {
-        "taskCount": 2,
+        "taskCount": 3,
         "name": "Daniel Kim",
         "tasks": [
             {
@@ -28,22 +17,22 @@
                 "timeAssigned": "1.5 hours",
                 "description": "Draft the content plan for next month's blog posts.",
                 "taskName": "Content Planning"
+            },
+            {
+                "timeAssigned": "1 hour",
+                "description": "tesdtsdtsdatsdsafsdf",
+                "taskName": "test2"
             }
         ]
     },
     {
-        "taskCount": 3,
+        "taskCount": 2,
         "name": "Sophia Martinez",
         "tasks": [
             {
                 "timeAssigned": "2 hours",
                 "description": "Analyze monthly financial reports and identify key trends.",
                 "taskName": "Financial Analysis"
-            },
-            {
-                "timeAssigned": "1 hour",
-                "description": "Process and approve invoices received from vendors.",
-                "taskName": "Invoice Processing"
             },
             {
                 "timeAssigned": "1 hour",

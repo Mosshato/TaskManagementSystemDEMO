@@ -7,7 +7,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class BigBoss extends User implements Login, Task{
@@ -29,44 +31,40 @@ public class BigBoss extends User implements Login, Task{
     }
 
     @Override
-    public void whileIsLoggedIn() {System.out.println("Choose one of the following options:\n");
+    public void whileIsLoggedIn() {
+        System.out.println("Choose one of the following options:\n");
+
+        Map<Integer, Runnable> menuOptions = new HashMap<>();
+        menuOptions.put(1, this::viewEmployesTasks);
+        menuOptions.put(2, this::viewManagersTasks);
+        menuOptions.put(3, this::setEmpTask);
+        menuOptions.put(4, this::setManagerTask);
+        menuOptions.put(5, this::assignTaskEmp);
+        menuOptions.put(6, this::assignTaskManager);
+        menuOptions.put(7, () -> System.exit(0));
+
         while (true) {
             System.out.println("1 - See employee's tasks.\n");
             System.out.println("2 - See managers's tasks.\n");
             System.out.println("3 - Set one of your employee's tasks as completed.\n");
             System.out.println("4 - Set one of your managers's tasks as completed.\n");
-            System.out.println("5 - Assign a task to a employee.\n");
+            System.out.println("5 - Assign a task to an employee.\n");
             System.out.println("6 - Assign a task to a manager.\n");
             System.out.println("7 - Exit the app.\n");
 
             InputDevice inputDevice = new InputDevice();
             Integer option = inputDevice.chooseOption();
 
-            if (option == 1) {
-                this.viewEmployesTasks();
-                System.out.println("You can continue by choosing an option again:\n");
-            } else if (option == 2) {
-                this.viewManagersTasks();
-                System.out.println("You can continue by choosing an option again:\n");
-            } else if (option == 3) {
-                this.setEmpTask();
-                System.out.println("You can continue by choosing an option again:\n");
-            } else if(option == 4) {
-                this.setManagerTask();
-                System.out.println("You can continue by choosing an option again:\n");
-            } else if(option == 5) {
-                this.assignTaskEmp();
-                System.out.println("You can continue by choosing an option again:\n");
-            } else if(option == 6) {
-                this.assignTaskManager();
-                System.out.println("You can continue by choosing an option again:\n");
-            } else if(option == 7) {
-                System.exit(0);
+            Runnable action = menuOptions.get(option);
+            if (action != null) {
+                action.run();
+                if (option != 7) {
+                    System.out.println("You can continue by choosing an option again:\n");
+                }
             } else {
                 System.out.println("Enter a valid option!");
             }
         }
-
     }
 
     private void viewEmployesTasks() {
@@ -165,34 +163,41 @@ public class BigBoss extends User implements Login, Task{
             if (!found) {
                 System.out.println("Manager " + managerName + " not found.");
             } else if (canAssign) {
-                System.out.println("Enter the new task details for " + managerName + ":");
+                try {
+                    System.out.println("Enter the new task details for " + managerName + ":");
 
-                System.out.print("Task Name: ");
-                String taskName = scanner.nextLine();
+                    System.out.print("Task Name: ");
+                    String taskName = scanner.nextLine();
+                    validateStringInput(taskName, "Task Name");
 
-                System.out.print("Description: ");
-                String description = scanner.nextLine();
+                    System.out.print("Description: ");
+                    String description = scanner.nextLine();
+                    validateStringInput(description, "Description");
 
-                System.out.print("Time Assigned <'1 hour'/'2 hours'>: ");
-                String timeAssigned = scanner.nextLine();
+                    System.out.print("Time Assigned <'1 hours'/'2 hours'/'3 hours'/'4 hours'/'5 hours'>: ");
+                    String timeAssigned = scanner.nextLine();
+                    validateTimeInput(timeAssigned);
 
-                JSONObject newTask = new JSONObject();
-                newTask.put("taskName", taskName);
-                newTask.put("description", description);
-                newTask.put("timeAssigned", timeAssigned);
+                    JSONObject newTask = new JSONObject();
+                    newTask.put("taskName", taskName);
+                    newTask.put("description", description);
+                    newTask.put("timeAssigned", timeAssigned);
 
-                JSONObject manager = jsonArray.getJSONObject(managerIndex);
-                JSONArray tasks = manager.getJSONArray("tasks");
-                tasks.put(newTask);
+                    JSONObject manager = jsonArray.getJSONObject(managerIndex);
+                    JSONArray tasks = manager.getJSONArray("tasks");
+                    tasks.put(newTask);
 
-                int currentTaskCount = manager.getInt("taskCount");
-                manager.put("taskCount", currentTaskCount + 1);
+                    int currentTaskCount = manager.getInt("taskCount");
+                    manager.put("taskCount", currentTaskCount + 1);
 
-                try (FileWriter fileWriter = new FileWriter(filePath)) {
-                    fileWriter.write(jsonArray.toString(4));
-                    System.out.println("New task assigned and changes saved successfully.");
-                } catch (IOException e) {
-                    System.out.println("Error writing to the file: " + e.getMessage());
+                    try (FileWriter fileWriter = new FileWriter(filePath)) {
+                        fileWriter.write(jsonArray.toString(4));
+                        System.out.println("New task assigned and changes saved successfully.");
+                    } catch (IOException e) {
+                        System.out.println("Error writing to the file: " + e.getMessage());
+                    }
+                } catch (InvalidTaskInputException e) {
+                    System.out.println(e.getMessage());
                 }
             }
 
@@ -200,6 +205,18 @@ public class BigBoss extends User implements Login, Task{
             System.out.println(e.getMessage());
         } catch (IOException e) {
             System.out.println("Error reading or writing the file: " + e.getMessage());
+        }
+    }
+
+    private void validateTimeInput(String time) throws InvalidTaskInputException {
+        if (!time.matches("[1-5] hours")) {
+            throw new InvalidTaskInputException("Error: Time must be in the format '1 hours' to '6 hours'.");
+        }
+    }
+
+    private void validateStringInput(String input, String fieldName) throws InvalidTaskInputException {
+        if (input == null || input.trim().isEmpty()) {
+            throw new InvalidTaskInputException("Error: " + fieldName + " must be a non-empty string.");
         }
     }
 

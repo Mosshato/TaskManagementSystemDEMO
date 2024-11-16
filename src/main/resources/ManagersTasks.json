@@ -1,8 +1,12 @@
 [
     {
-        "taskCount": 0,
+        "taskCount": 1,
         "name": "Alice Johnson",
-        "tasks": []
+        "tasks": [{
+            "timeAssigned": "1 hours",
+            "description": "asdfasfd asdfsadf sadf",
+            "taskName": "asdf"
+        }]
     },
     {
         "taskCount": 3,
